@@ -1,8 +1,10 @@
-# Azza Man - Personal Financial Assistant
+# **Azza Man** 
+### **Your AI-powered personal Financial Assistant**
+#### **Creator - [🅱🅻🅰🆀](https://www.linkedin.com/in/chinonsoodiaka/)**
 
-![Azza Man Logo](path/to/your/logo.png)  <!-- Replace with the path to your logo -->
-![Azza Man Demo](path/to/your/demo.gif)  <!-- Replace with the path to your GIF -->
-![Project Architecture Diagram](path/to/your/architecture_diagram.png)  <!-- Replace with the path to your architecture diagram -->
+![azaman7](https://github.com/user-attachments/assets/58e8ac70-2d16-4809-88a0-d44631e36964)
+
+![Screen Recording - Jan 19, 2025-VEED](https://github.com/user-attachments/assets/0ee60f25-d1f7-4f2e-8029-b916a23dcdc7)
 
 ## Table of Contents
 - [Project Overview](#project-overview)
@@ -13,6 +15,7 @@
 - [Node and Function Descriptions](#node-and-function-descriptions)
 - [Contributing](#contributing)
 - [License](#license)
+
 
 ## Project Overview
 Azza Man is a dynamic AI-driven personal financial assistant designed to help users manage their finances effortlessly. With features like budgeting, expense tracking, and insightful financial analysis, Azza Man simplifies the financial journey for users, making it easier to stay on top of their financial health.
@@ -30,110 +33,115 @@ The architecture of Azza Man consists of several key components:
 - **Backend**: Utilizes LangChain for processing user inputs and generating responses.
 - **Graph Structure**: Implements a state graph to manage the flow of conversation and actions.
 
-![Project Architecture Diagram](path/to/your/architecture_diagram.png)  <!-- Replace with the path to your architecture diagram -->
+![azzaman_architecture](https://github.com/user-attachments/assets/2abd3d5b-57f5-4590-b746-d5b104eca89a)
+
 
 ## Installation
 To set up Azza Man locally, follow these steps:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/azza-man.git
+   git clone https://github.com/Blaqadonis/azza_man.git
    cd azza-man
-Create a virtual environment (optional but recommended):
+2. **Create a virtual environment (optional but recommended)**:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+3. **Install dependencies**:
+   ```bash
+   pip install -r requirements.txt
+4. **Set up environment variables**: Create a .env file in the root directory and add your API keys:
+   ```bash
+   GROQ_API_KEY=your_api_key_here
+   LANGCHAIN_API_KEY=your_api_key_here
 
-bash
-Copy
-python -m venv venv
-source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-Install dependencies:
+## Usage
+* To run the Azza Man application, execute the following command:
+   ```bash
+   streamlit run app.py
+* Open your web browser and navigate to [local server](http://localhost:8501/) to interact with Azza Man.
 
-bash
-Copy
-pip install -r requirements.txt
-Set up environment variables: Create a .env file in the root directory and add your API keys:
+## Nodes and Function Descriptions
 
-unknown
-Copy
-GROQ_API_KEY=your_api_key_here
-Usage
-To run the Azza Man application, execute the following command:
-
-bash
-Copy
-streamlit run app.py
-Open your web browser and navigate to http://localhost:8501 to interact with Azza Man.
-
-Node and Function Descriptions
-Overview of Nodes
+**Overview of Nodes**
 Azza Man's functionality is organized into various nodes, each responsible for specific tasks within the application. Below is a detailed description of each node and its purpose:
 
-Landing Page Node:
+   * **Landing Page Node**:
+   
+   Displays the introduction to Azza Man, including the logo and key features.
+   Provides a user-friendly entry point to the application.
+   
+   * **Chat Page Node**:
+   
+   Facilitates real-time interaction between the user and Azza Man.
+   Handles user inputs and displays responses from the AI.
+   
+   * **Budget Registrar Node**:
+   
+   Manages the creation and updating of user budgets.
+   Allows users to set financial goals and track their progress.
+   
+   * **Expense Registrar Node**:
+   
+   Handles the logging of user expenses.
+   Provides insights into spending patterns and areas for improvement.
+   
+   * **Expert Registrar Node**:
+   
+   Connects users with financial advice and expert insights.
+   Offers personalized recommendations based on user data.
+   
+   * **Summarize Conversation Node**:
+   
+   Compiles the conversation history and provides a summary to the user.
+   Helps users reflect on their financial discussions with Azza Man.
 
-Displays the introduction to Azza Man, including the logo and key features.
-Provides a user-friendly entry point to the application.
-Chat Page Node:
+## Node and Function Descriptions
 
-Facilitates real-time interaction between the user and Azza Man.
-Handles user inputs and displays responses from the AI.
-Budget Registrar Node:
+   * **assistant(state: dict) -> str**
 
-Manages the creation and updating of user budgets.
-Allows users to set financial goals and track their progress.
-Expense Registrar Node:
+      Purpose: Routes the user query to the appropriate registrar or handles session control.
+      Parameters:
+      state: The application's current state, including messages and session information.
+      Returns: The next node to route to or a session control indicator ('END').
+     
+  * **intro(state: State) -> State**
+      
+      Purpose: Introduces Azza Man to the user and identifies their needs.
+      Parameters:
+      state: The current state of the application.
+      Returns: Updated state after the introduction.
+    
+ * **evaluator(state: dict) -> str**
 
-Handles the logging of user expenses.
-Provides insights into spending patterns and areas for improvement.
-Expert Registrar Node:
+      Purpose: Evaluates the user's response to the introduction.
+      Parameters:
+      state: The current application state, including messages and session information.
+      Returns: The appropriate next node to route the user to or session control indicator ('END').
+   
+* **budget_registrar(state: Dict[str, Any]) -> Dict[str, Any]**
 
-Connects users with financial advice and expert insights.
-Offers personalized recommendations based on user data.
-Summarize Conversation Node:
+      Purpose: Handles the budget registry process, prompting the user for income, savings goal, and currency details.
+      Parameters:
+      state: The state containing conversation context and user data.
+      Returns: Updated state with user's income and savings goal.
+  
+* **expense_registrar(state: State) -> State**
 
-Compiles the conversation history and provides a summary to the user.
-Helps users reflect on their financial discussions with Azza Man.
-Key Functions
-invoke_our_graph:
-Processes user messages and invokes the appropriate graph structure to generate responses.
-show_assistant_output:
-Displays the assistant's output to the console for debugging purposes.
-Detailed Function Descriptions
-1. assistant(state: dict) -> str
-Purpose: Routes the user query to the appropriate registrar or handles session control.
-Parameters:
-state: The application's current state, including messages and session information.
-Returns: The next node to route to or a session control indicator ('END').
-2. intro(state: State) -> State
-Purpose: Introduces Azza Man to the user and identifies their needs.
-Parameters:
-state: The current state of the application.
-Returns: Updated state after the introduction.
-3. evaluator(state: dict) -> str
-Purpose: Evaluates the user's response to the introduction.
-Parameters:
-state: The current application state, including messages and session information.
-Returns: The appropriate next node to route the user to or session control indicator ('END').
-4. budget_registrar(state: Dict[str, Any]) -> Dict[str, Any]
-Purpose: Handles the budget registry process, prompting the user for income, savings goal, and currency details.
-Parameters:
-state: The state containing conversation context and user data.
-Returns: Updated state with user's income and savings goal.
-5. expense_registrar(state: State) -> State
-Purpose: Handles the expense registry process, prompting the user for expense amounts and currency details.
-Parameters:
-state: The current state containing conversation context and user data.
-Returns: Updated state with the user's total expenses and currency.
-6. expert_registrar(state: Dict[str, Any]) -> Dict[str, Any]
-Purpose: Handles the financial expert registry process, prompting the user for income, expenses, savings goals, and currency. Updates the state accordingly.
-Parameters:
-state: The state containing conversation context and user data.
-Returns: Updated state with the user's financial details.
-Contributing
-Contributions are welcome! If you would like to contribute to Azza Man, please follow these steps:
+      Purpose: Handles the expense registry process, prompting the user for expense amounts and currency details.
+      Parameters:
+      state: The current state containing conversation context and user data.
+      Returns: Updated state with the user's total expenses and currency.
+  
+* **expert_registrar(state: Dict[str, Any]) -> Dict[str, Any]**
+      
+      Purpose: Handles the financial expert registry process, prompting the user for income, expenses, savings goals, and currency. Updates the state accordingly.
+      Parameters:
+      state: The state containing conversation context and user data.
+      Returns: Updated state with the user's financial details.
+  
+## Contributing
+Contributions are welcome! 
 
-Fork the repository.
-Create a new branch (git checkout -b feature-branch).
-Make your changes and commit them (git commit -m 'Add new feature').
-Push to the branch (git push origin feature-branch).
-Open a pull request.
-License
+## License
 This project is licensed under the MIT License. See the LICENSE file for details.
